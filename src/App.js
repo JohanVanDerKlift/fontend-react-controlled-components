@@ -2,36 +2,50 @@ import React from 'react';
 import './App.css';
 
 function App() {
-    const [nameValue, setNameValue] = React.useState('');
-    const [ageValue, setAgeValue] = React.useState('');
-    const [remarksValue, setRemarksValue] = React.useState('');
-    const [newsletterValue, setNewsletterValue] = React.useState(false);
+    // const [nameValue, setNameValue] = React.useState('');
+    // const [ageValue, setAgeValue] = React.useState('');
+    // const [remarksValue, setRemarksValue] = React.useState('');
+    // const [newsletterValue, setNewsletterValue] = React.useState(false);
 
-    function handleSubmit(event) {
-        console.log("Name: " + {})
+    const [ state, setState ] = React.useState({
+        fullName: "",
+        age: "",
+        remarks: "",
+        formNewsletter: false
+    })
 
-        event.preventDefault();
+    function handleInput(e) {
+        setState(e.target.value);
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        console.log("Name: " + e.target.valueOf().fullName.value);
+        console.log("Age: " + e.target.valueOf().age.value);
+        console.log("Remarks: " + e.target.valueOf().remarks.value);
+        console.log("News Letter: " + e.target.valueOf().formNewsletter.value);
     }
 
   return (
-      <form onSubmit={handleSubmit}>
+      // <form onSubmit={handleSubmit.bind(state.fullName, state.age, state.remarks, state.formNewsletter)}>
+      <form onSubmit={handleSubmit.bind(state)}>
           <fieldset>
               <legend>Gegevens</legend>
-              <label htmlFor="name">Naam: </label>
+              <label htmlFor="fullname">Naam: </label>
               <input
                   type="text"
-                  id="name"
-                  name="name"
-                  value={nameValue}
-                  onChange={(e) => setNameValue(e.target.value)}
+                  id="fullName"
+                  name="fullName"
+                  value={state.fullName}
+                  onChange={handleInput}
               />
               <label htmlFor="age">Leeftijd: </label>
               <input
                   type="number"
                   id="age"
                   name="age"
-                  value={ageValue}
-                  onChange={(e) => setAgeValue(e.target.value)}
+                  value={state.age}
+                  onChange={handleInput}
               />
           </fieldset>
           <fieldset>
@@ -43,15 +57,15 @@ function App() {
                   cols="30"
                   rows="10"
                   placeholder="Wat vond je van het recept?"
-                  value={remarksValue}
-                  onChange={(e) => setRemarksValue(e.target.value)}
+                  value={state.remarks}
+                  onChange={handleInput}
               ></textarea>
               <input
                   type="checkbox"
-                  name="form-newsletter"
-                  id="form-newsletter"
-                  checked={newsletterValue}
-                  onChange={(e) => setNewsletterValue(!newsletterValue)}
+                  name="formNewsletter"
+                  id="formNewsletter"
+                  checked={state.formNewsletter}
+                  onChange={handleInput}
               />
               <label htmlFor="form-newsletter">Ik schrijf me in voor de nieuwsbrief</label>
               <button type="submit">Versturen</button>
